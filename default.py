@@ -22,31 +22,31 @@ def checkStartupAction():
 	try:
 		rcbAddon = xbmcaddon.Addon(id='script.games.rom.collection.browser')
 	except:
-		print 'RCB Service: Error while accessing "script.games.rom.collection.browser". Make sure the addon is installed.'
+		xbmc.log('RCB Service: Error while accessing "script.games.rom.collection.browser". Make sure the addon is installed.')
 		return
 		
 	launchOnStartup = rcbAddon.getSetting('rcb_launchOnStartup')
-	print 'RCB Service: launch RCB on startup = ' +str(launchOnStartup)
+	xbmc.log('RCB Service: launch RCB on startup = ' +str(launchOnStartup))
 	
 	if(launchOnStartup.lower() == 'true'):
 		startupDelay = int(float(rcbAddon.getSetting('rcb_startupDelay')))
 		xbmc.sleep(startupDelay)
 		path = os.path.join(rcbAddon.getAddonInfo('path'), 'default.py')
-		print 'RCB Service: launch RCB ' +str(path)
+		xbmc.log('RCB Service: launch RCB ' +str(path))
 		xbmc.executescript("%s" %path)
 		return
 	
 	#check scrape on XBMC startup setting	
 	scrapeOnStart = rcbAddon.getSetting('rcb_scrapOnStartUP')
-	print 'RCB Service: scrape games on startup = ' +str(scrapeOnStart)
+	xbmc.log('RCB Service: scrape games on startup = ' +str(scrapeOnStart))
 	
 	if(scrapeOnStart.lower() == 'true'):
 		#launch dbUpdate
 		path = os.path.join(rcbAddon.getAddonInfo('path'), 'dbUpLauncher.py')
-		print 'RCB Service: Starting DB Update' +str(path)
+		xbmc.log('RCB Service: Starting DB Update' +str(path))
 		xbmc.executescript("%s" %path)
 		
 
-print 'RCB Service: Start'
+xbmc.log('RCB Service: Start')
 checkStartupAction()
-print 'RCB Service: Done'
+xbmc.log('RCB Service: Done')
